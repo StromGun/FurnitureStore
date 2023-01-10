@@ -35,7 +35,7 @@ namespace FurnitureStore.Pages
 
         private void BtnAddOrder_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Pages.AddEditOrderPage());
         }
 
         private void BtnRemoveOrder_Click(object sender, RoutedEventArgs e)

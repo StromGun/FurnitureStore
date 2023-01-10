@@ -76,6 +76,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\AccountPartial.cs" />
+    <Compile Include="Entities\Check.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Manufacturer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -102,6 +105,9 @@
     <Compile Include="Entities\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ProductType.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Seller.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -110,6 +116,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddEditOrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -125,6 +135,9 @@
   <ItemGroup>
     <Compile Include="Pages\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddEditOrderPage.xaml.cs">
+      <DependentUpon>AddEditOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AuthorizationPage.xaml.cs">
       <DependentUpon>AuthorizationPage.xaml</DependentUpon>

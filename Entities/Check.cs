@@ -12,13 +12,10 @@ namespace FurnitureStore.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Seller
+    public partial class Check
     {
+        public int Check_number { get; set; }
         public int Seller_number { get; set; }
-        public string First_name { get; set; }
-        public string Last_name { get; set; }
-        public string Patronymic { get; set; }
-        public System.DateTime Birthday { get; set; }
-        public System.DateTime Date_of_receipt { get; set; }
+        public System.DateTime Date_of_sale { get; set; }
     }
 }

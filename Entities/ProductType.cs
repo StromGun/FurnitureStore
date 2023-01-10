@@ -12,13 +12,18 @@ namespace FurnitureStore.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Seller
+    public partial class ProductType
     {
-        public int Seller_number { get; set; }
-        public string First_name { get; set; }
-        public string Last_name { get; set; }
-        public string Patronymic { get; set; }
-        public System.DateTime Birthday { get; set; }
-        public System.DateTime Date_of_receipt { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ProductType()
+        {
+            this.Products = new HashSet<Product>();
+        }
+    
+        public int ID { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

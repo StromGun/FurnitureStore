@@ -7,24 +7,30 @@
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="450" MinWidth="800" WindowStartupLocation="CenterScreen">
     <Grid>
+        
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*" MaxHeight="70"/>
+            <RowDefinition Height="0.5*" MaxHeight="70"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="0.3*" MaxHeight="50"/>
+            <RowDefinition Height="0.2*" MaxHeight="50"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{StaticResource colorCommon}">
-            <Image HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Text="{Binding ElementName=MainFrame, Path=Content.Title}" Width="auto" Style="{StaticResource TblockMain}"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Button Content="Назад" Name="BtnBack" HorizontalAlignment="Right" VerticalAlignment="Center" Click="BtnBack_Click"/>
-        </Grid>
+        <StackPanel Grid.Row="0" Background="{StaticResource colorCommon}">
+            <Menu Grid.Row="0" Height="20" VerticalAlignment="Top">
+                <MenuItem Header="О программе" Click="BtnAbout_Click"/>
+            </Menu>
+            
+            <Grid>
+                <Image HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding ElementName=MainFrame, Path=Content.Title}" Width="auto" Style="{StaticResource TblockMain}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Content="Назад" Name="BtnBack" HorizontalAlignment="Right" VerticalAlignment="Center" Click="BtnBack_Click"/>
+            </Grid>
+        </StackPanel>
 
         <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
 
         <Grid Grid.Row="2" Background="{StaticResource colorCommon}">
-            <Button Content="About" Name="BtnAbout" Style="{StaticResource BtnSmall}" 
-                    HorizontalAlignment="Right" VerticalAlignment="Center"  Click="BtnAbout_Click"/>
+            
         </Grid>
         
     </Grid>

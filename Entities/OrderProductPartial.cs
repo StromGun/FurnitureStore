@@ -8,5 +8,6 @@ namespace FurnitureStore.Entities
 {
     partial class OrderProduct
     {
+
     }
 }

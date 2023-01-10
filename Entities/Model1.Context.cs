@@ -25,10 +25,12 @@ namespace FurnitureStore.Entities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Check> Checks { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductType> ProductTypes { get; set; }
         public virtual DbSet<Seller> Sellers { get; set; }
-        public virtual DbSet<Account> Accounts { get; set; }
     }
 }

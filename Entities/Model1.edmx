@@ -12,6 +12,14 @@
           <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Checks">
+          <Key>
+            <PropertyRef Name="Check_number" />
+          </Key>
+          <Property Name="Check_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Seller_number" Type="int" Nullable="false" />
+          <Property Name="Date_of_sale" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="Manufacturers">
           <Key>
             <PropertyRef Name="Manufacturer_number" />
@@ -48,6 +56,13 @@
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="Guarantee_period" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Sellers">
           <Key>
             <PropertyRef Name="Seller_number" />
@@ -58,8 +73,6 @@
           <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
           <Property Name="Birthday" Type="date" Nullable="false" />
           <Property Name="Date_of_receipt" Type="date" Nullable="false" />
-          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_OrderProduct_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1">
@@ -103,12 +116,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Products_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище FurnitureStoreModelContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Checks" EntityType="Self.Checks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderProduct" EntityType="Self.OrderProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sellers" EntityType="Self.Sellers" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_OrderProduct_Orders" Association="Self.FK_OrderProduct_Orders">
             <End Role="Orders" EntitySet="Orders" />
@@ -122,88 +151,35 @@
             <End Role="Manufacturers" EntitySet="Manufacturers" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductType" Association="Self.FK_Products_ProductType">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FurnitureStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Manufacturer">
-          <Key>
-            <PropertyRef Name="Manufacturer_number" />
-          </Key>
-          <Property Name="Manufacturer_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Manufacturer_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Manufacturers" FromRole="Manufacturers" ToRole="Products" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="DateOrder" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.OrderProduct" FromRole="Orders" ToRole="Products" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="Product_number" />
-          </Key>
-          <Property Name="Product_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Manufacturer_number" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Guarantee_period" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Manufacturer" Relationship="Self.FK_Products_Manufacturers" FromRole="Products" ToRole="Manufacturers" />
-          <NavigationProperty Name="Orders" Relationship="Self.OrderProduct" FromRole="Products" ToRole="Orders" />
-          <Property Name="ProductType" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Seller">
-          <Key>
-            <PropertyRef Name="Seller_number" />
-          </Key>
-          <Property Name="Seller_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="First_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Date_of_receipt" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_Products_Manufacturers">
-          <End Role="Manufacturers" Type="Self.Manufacturer" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Products" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Manufacturers">
-              <PropertyRef Name="Manufacturer_number" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="Manufacturer_number" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="OrderProduct">
-          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-          <End Role="Products" Type="Self.Product" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="FurnitureStoreEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturer" />
-          <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="Sellers" EntityType="Self.Seller" />
-          <AssociationSet Name="FK_Products_Manufacturers" Association="Self.FK_Products_Manufacturers">
-            <End Role="Manufacturers" EntitySet="Manufacturers" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="OrderProduct" Association="Self.OrderProduct">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
           <EntitySet Name="Accounts" EntityType="FurnitureStoreModel.Account" />
+          <EntitySet Name="Checks" EntityType="FurnitureStoreModel.Check" />
+          <EntitySet Name="Manufacturers" EntityType="FurnitureStoreModel.Manufacturer" />
+          <EntitySet Name="Orders" EntityType="FurnitureStoreModel.Order" />
+          <EntitySet Name="Products" EntityType="FurnitureStoreModel.Product" />
+          <EntitySet Name="ProductTypes" EntityType="FurnitureStoreModel.ProductType" />
+          <EntitySet Name="Sellers" EntityType="FurnitureStoreModel.Seller" />
+          <AssociationSet Name="FK_Products_Manufacturers" Association="FurnitureStoreModel.FK_Products_Manufacturers">
+            <End Role="Manufacturer" EntitySet="Manufacturers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductType" Association="FurnitureStoreModel.FK_Products_ProductType">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="OrderProduct" Association="FurnitureStoreModel.OrderProduct">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -212,65 +188,104 @@
           <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Check">
+          <Key>
+            <PropertyRef Name="Check_number" />
+          </Key>
+          <Property Name="Check_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Seller_number" Type="Int32" Nullable="false" />
+          <Property Name="Date_of_sale" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="Manufacturer_number" />
+          </Key>
+          <Property Name="Manufacturer_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Manufacturer_name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="FurnitureStoreModel.FK_Products_Manufacturers" FromRole="Manufacturer" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateOrder" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Products" Relationship="FurnitureStoreModel.OrderProduct" FromRole="Order" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Product_number" />
+          </Key>
+          <Property Name="Product_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductType" Type="Int32" Nullable="false" />
+          <Property Name="Manufacturer_number" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Guarantee_period" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Manufacturer" Relationship="FurnitureStoreModel.FK_Products_Manufacturers" FromRole="Product" ToRole="Manufacturer" />
+          <NavigationProperty Name="ProductType1" Relationship="FurnitureStoreModel.FK_Products_ProductType" FromRole="Product" ToRole="ProductType" />
+          <NavigationProperty Name="Orders" Relationship="FurnitureStoreModel.OrderProduct" FromRole="Product" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="FurnitureStoreModel.FK_Products_ProductType" FromRole="ProductType" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Seller">
+          <Key>
+            <PropertyRef Name="Seller_number" />
+          </Key>
+          <Property Name="Seller_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_of_receipt" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <Association Name="FK_Products_Manufacturers">
+          <End Type="FurnitureStoreModel.Manufacturer" Role="Manufacturer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FurnitureStoreModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="Manufacturer_number" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Manufacturer_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductType">
+          <End Type="FurnitureStoreModel.ProductType" Role="ProductType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FurnitureStoreModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderProduct">
+          <End Type="FurnitureStoreModel.Order" Role="Order" Multiplicity="*" />
+          <End Type="FurnitureStoreModel.Product" Role="Product" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище FurnitureStoreModelContainer" CdmEntityContainer="FurnitureStoreEntities">
-          <EntitySetMapping Name="Manufacturers">
-            <EntityTypeMapping TypeName="FurnitureStoreModel.Manufacturer">
-              <MappingFragment StoreEntitySet="Manufacturers">
-                <ScalarProperty Name="Manufacturer_number" ColumnName="Manufacturer_number" />
-                <ScalarProperty Name="Manufacturer_name" ColumnName="Manufacturer_name" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="City" ColumnName="City" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="FurnitureStoreModel.Order">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="FurnitureStoreModel.Product">
-              <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
-                <ScalarProperty Name="Product_number" ColumnName="Product_number" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Manufacturer_number" ColumnName="Manufacturer_number" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Guarantee_period" ColumnName="Guarantee_period" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sellers">
-            <EntityTypeMapping TypeName="FurnitureStoreModel.Seller">
-              <MappingFragment StoreEntitySet="Sellers">
-                <ScalarProperty Name="Seller_number" ColumnName="Seller_number" />
-                <ScalarProperty Name="First_name" ColumnName="First_name" />
-                <ScalarProperty Name="Last_name" ColumnName="Last_name" />
-                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-                <ScalarProperty Name="Date_of_receipt" ColumnName="Date_of_receipt" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="OrderProduct" TypeName="FurnitureStoreModel.OrderProduct" StoreEntitySet="OrderProduct">
-            <EndProperty Name="Orders">
-              <ScalarProperty Name="ID" ColumnName="OrderID" />
-            </EndProperty>
-            <EndProperty Name="Products">
-              <ScalarProperty Name="Product_number" ColumnName="ProductID" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="FurnitureStoreModel.Account">
               <MappingFragment StoreEntitySet="Accounts">
@@ -279,6 +294,74 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Checks">
+            <EntityTypeMapping TypeName="FurnitureStoreModel.Check">
+              <MappingFragment StoreEntitySet="Checks">
+                <ScalarProperty Name="Date_of_sale" ColumnName="Date_of_sale" />
+                <ScalarProperty Name="Seller_number" ColumnName="Seller_number" />
+                <ScalarProperty Name="Check_number" ColumnName="Check_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturers">
+            <EntityTypeMapping TypeName="FurnitureStoreModel.Manufacturer">
+              <MappingFragment StoreEntitySet="Manufacturers">
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Manufacturer_name" ColumnName="Manufacturer_name" />
+                <ScalarProperty Name="Manufacturer_number" ColumnName="Manufacturer_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="FurnitureStoreModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="FurnitureStoreModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Guarantee_period" ColumnName="Guarantee_period" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Manufacturer_number" ColumnName="Manufacturer_number" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Product_number" ColumnName="Product_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="FurnitureStoreModel.ProductType">
+              <MappingFragment StoreEntitySet="ProductType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sellers">
+            <EntityTypeMapping TypeName="FurnitureStoreModel.Seller">
+              <MappingFragment StoreEntitySet="Sellers">
+                <ScalarProperty Name="Date_of_receipt" ColumnName="Date_of_receipt" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Last_name" ColumnName="Last_name" />
+                <ScalarProperty Name="First_name" ColumnName="First_name" />
+                <ScalarProperty Name="Seller_number" ColumnName="Seller_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="OrderProduct" TypeName="FurnitureStoreModel.OrderProduct" StoreEntitySet="OrderProduct">
+            <EndProperty Name="Product">
+              <ScalarProperty Name="Product_number" ColumnName="ProductID" />
+            </EndProperty>
+            <EndProperty Name="Order">
+              <ScalarProperty Name="ID" ColumnName="OrderID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

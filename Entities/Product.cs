@@ -22,12 +22,13 @@ namespace FurnitureStore.Entities
     
         public int Product_number { get; set; }
         public string Name { get; set; }
+        public int ProductType { get; set; }
         public int Manufacturer_number { get; set; }
         public decimal Price { get; set; }
         public System.DateTime Guarantee_period { get; set; }
-        public int ProductType { get; set; }
     
         public virtual Manufacturer Manufacturer { get; set; }
+        public virtual ProductType ProductType1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
     }
