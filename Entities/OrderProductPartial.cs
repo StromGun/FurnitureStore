@@ -8,6 +8,6 @@ namespace FurnitureStore.Entities
 {
     partial class OrderProduct
     {
-
+        public ICollection<Product> Products { get; set; }
     }
 }

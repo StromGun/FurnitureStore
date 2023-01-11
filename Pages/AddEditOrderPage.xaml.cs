@@ -1,6 +1,8 @@
 ﻿using FurnitureStore.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +23,9 @@ namespace FurnitureStore.Pages
     /// </summary>
     public partial class AddEditOrderPage : Page
     {
+        private Product product = new Product();
+        private Order order = new Order();
+
         public AddEditOrderPage()
         {
             InitializeComponent();
@@ -44,6 +49,16 @@ namespace FurnitureStore.Pages
         private void CboxTypeFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateLboxProducts();
+        }
+
+        private void LboxProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //Products = (ObservableCollection<Product>)LboxProducts.SelectedItems;
+
+            //LViewOrder.ItemsSource = order.Products;
+
+            // Берем коллекцию объектов из ListView передаем ее в функцию суммы из модели и преобразуем в строковый тип со знаком ₽
+            TboxSumm.Text = product.Summ(LViewOrder.Items).ToString($"Итого {0:C}", CultureInfo.CreateSpecificCulture("ru-RU"));
         }
     }
 }
