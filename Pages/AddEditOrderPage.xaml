@@ -54,7 +54,7 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock x:Name="TboxSumm" Margin="5" />
-                <Button x:Name="BtnSave" Content="Сохранить" />
+                <Button x:Name="BtnSave" Content="Сохранить" Click="BtnSave_Click"/>
             </StackPanel>
 
         </StackPanel>

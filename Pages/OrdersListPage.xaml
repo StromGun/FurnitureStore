@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:FurnitureStore.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Заказы">
+      Title="Заказы" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -26,7 +26,7 @@
                 
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*"/>
                 <DataGridTextColumn Header="Дата заказа" Binding="{Binding DateOrder, StringFormat='{}{0:MM/dd/yyyy в hh:mm:ss}'}" Width="*"/>
-                <DataGridTextColumn Header="Сумма" Binding="{Binding Summ, StringFormat=N2}" Width="*"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Summ, StringFormat=C,ConverterCulture=ru-RU}" Width="*"/>
                 
                 <DataGridTemplateColumn Header="Мебель" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -36,7 +36,7 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Name}" Margin="5 0"/>
-                                            <TextBlock Text="{Binding Price, StringFormat=N2}" Margin="5 0"/>
+                                            <TextBlock Text="{Binding Price, StringFormat=C,ConverterCulture=ru-RU}" Margin="5 0"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -48,7 +48,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Редактировать" Style="{StaticResource BtnSmall}" Name="BtnEditOrder" 
+                            <Button Content="Редактировать" Style="{StaticResource BtnSmall}" Name="BtnEditOrder"  Click="BtnEditOrder_Click"
                                     VerticalAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

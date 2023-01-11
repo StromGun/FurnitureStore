@@ -24,13 +24,27 @@ namespace FurnitureStore.Pages
     public partial class AddEditOrderPage : Page
     {
         private Product product = new Product();
-        private Order order = new Order();
+        private Order currentOrder;
 
         public AddEditOrderPage()
         {
             InitializeComponent();
             UpdateLboxProducts();
             
+            CboxTypeFilter.ItemsSource = App.Context.ProductTypes.ToList();
+            CboxTypeFilter.SelectedIndex = 0;
+        }
+
+        public AddEditOrderPage(Order order)
+        {
+            InitializeComponent();
+            currentOrder = order;
+            Title = "Редактирование заказа";
+
+            LboxProducts.SelectedItem = currentOrder.Products;
+
+            UpdateLboxProducts();
+
             CboxTypeFilter.ItemsSource = App.Context.ProductTypes.ToList();
             CboxTypeFilter.SelectedIndex = 0;
         }
@@ -53,12 +67,31 @@ namespace FurnitureStore.Pages
 
         private void LboxProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //Products = (ObservableCollection<Product>)LboxProducts.SelectedItems;
-
-            //LViewOrder.ItemsSource = order.Products;
-
             // Берем коллекцию объектов из ListView передаем ее в функцию суммы из модели и преобразуем в строковый тип со знаком ₽
-            TboxSumm.Text = product.Summ(LViewOrder.Items).ToString($"Итого {0:C}", CultureInfo.CreateSpecificCulture("ru-RU"));
+            //TboxSumm.Text = product.Summ(LViewOrder.Items).ToString($"Итого {0:C}", CultureInfo.CreateSpecificCulture("ru-RU"));
+            TboxSumm.Text = product.Summ(LViewOrder.Items).ToString();
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentOrder != null)
+            {
+                var order = new Order
+                {
+                    DateOrder = DateTime.Now,
+                    Cost = Convert.ToDecimal(TboxSumm.Text),
+                };
+
+                // Берем каждый выбранный элемент из ListBox и добавляем в промежуточную таблицу
+                foreach (var item in LboxProducts.SelectedItems)
+                {
+                    order.Products.Add((Product)item);
+                }
+
+                App.Context.Orders.Add(order);
+                App.Context.SaveChanges();
+            }
+            NavigationService.GoBack();
         }
     }
 }
