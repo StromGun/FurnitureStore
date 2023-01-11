@@ -15,17 +15,33 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
-            
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <DatePicker Name="DPicker1" Style="{StaticResource DPickerCommon}" SelectedDateChanged="DPicker1_SelectedDateChanged"/>
+            <TextBlock Text="—" VerticalAlignment="Center" MaxWidth="5" Style="{StaticResource TblockMain}"/>
+            <DatePicker Name="DPicker2" Style="{StaticResource DPickerCommon}" SelectedDateChanged="DPicker2_SelectedDateChanged"/>
         </StackPanel>
+        
+        
 
-
-        <DataGrid Name="DgOrder" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="Vertical"
-                  RowBackground="#dcf5e0" AlternatingRowBackground="#c1d9c5">
+        <DataGrid Name="DgOrder" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="Vertical" 
+                  ItemsSource="{Binding Order}" RowBackground="#dcf5e0" AlternatingRowBackground="#c1d9c5">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Редактировать"/>
+                    <MenuItem Header="Удалить"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*"/>
-                <DataGridTextColumn Header="Дата заказа" Binding="{Binding DateOrder, StringFormat='{}{0:MM/dd/yyyy в HH:mm:ss}'}" Width="*"/>
+                <DataGridTextColumn Header="Дата заказа" Width="*" Binding="{Binding DateTimeOrder, ConverterCulture=ru-RU}">
+                    <!--<DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:dd/MM/yyyy} в {1:hh}:{1:mm}:{1:ss}">
+                            <Binding Path="DateOrder" ConverterCulture="ru-RU"/>
+                            <Binding Path="TimeOrder" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>-->
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Сумма" Binding="{Binding Summ, StringFormat=C,ConverterCulture=ru-RU}" Width="*"/>
                 
                 <DataGridTemplateColumn Header="Мебель" Width="*">

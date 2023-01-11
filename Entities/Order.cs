@@ -22,6 +22,7 @@ namespace FurnitureStore.Entities
     
         public int ID { get; set; }
         public System.DateTime DateOrder { get; set; }
+        public System.TimeSpan TimeOrder { get; set; }
         public decimal Cost { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

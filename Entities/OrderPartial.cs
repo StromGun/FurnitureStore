@@ -1,4 +1,6 @@
-﻿namespace FurnitureStore.Entities
+﻿using System;
+
+namespace FurnitureStore.Entities
 {
     partial class Order
     {
@@ -13,6 +15,11 @@
                 }
                 return summ;
             }
+        }
+
+        public DateTime DateTimeOrder
+        {
+            get => DateOrder + TimeOrder;
         }
     }
 }

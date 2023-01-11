@@ -42,7 +42,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DateOrder" Type="datetime" Nullable="false" />
+          <Property Name="DateOrder" Type="date" Nullable="false" />
+          <Property Name="TimeOrder" Type="time" Precision="7" Nullable="false" />
           <Property Name="Cost" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
@@ -211,7 +212,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DateOrder" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateOrder" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TimeOrder" Type="Time" Nullable="false" Precision="7" />
           <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="Products" Relationship="FurnitureStoreModel.OrderProduct" FromRole="Order" ToRole="Product" />
         </EntityType>
@@ -317,6 +319,7 @@
             <EntityTypeMapping TypeName="FurnitureStoreModel.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="TimeOrder" ColumnName="TimeOrder" />
                 <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

@@ -5,21 +5,23 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace FurnitureStore.Stuff
 {
     public class AddEditOrderViewModel : ObservableObject
     {
-        private ObservableCollection<Product> products;
-        public ObservableCollection<Product> Products
-        {
-            get => products;
-            set { products = value; NotifyPropertyChanged(); }
-        }
+        Product product = new Product();
+
+        private decimal summ;
+        public decimal Summ { get { return summ; } set { summ = value; NotifyPropertyChanged(); } }
 
         public RelayCommand LboxSelectionChanged;
+
+        public void Summa(ItemCollection item)
+        {
+            Summ = product.Summ(item);
+        }
 
         //private AddEditOrderViewModel()
         //{

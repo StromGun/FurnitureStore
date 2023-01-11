@@ -7,7 +7,6 @@ namespace FurnitureStore.Stuff
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void NotifyPropertyChanged([CallerMemberName] string name = null) => 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        protected void NotifyPropertyChanged([CallerMemberName] string name = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

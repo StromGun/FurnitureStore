@@ -1,4 +1,5 @@
 ﻿using FurnitureStore.Entities;
+using FurnitureStore.Stuff;
 using System;
 using System.Linq;
 using System.Windows;
@@ -14,6 +15,7 @@ namespace FurnitureStore.Pages
     {
         private Product product = new Product();
         private Order currentOrder;
+        private readonly AddEditOrderViewModel viewModel = new AddEditOrderViewModel();
 
         public AddEditOrderPage()
         {
@@ -58,7 +60,12 @@ namespace FurnitureStore.Pages
         {
             // Берем коллекцию объектов из ListView передаем ее в функцию суммы из модели и преобразуем в строковый тип со знаком ₽
             //TboxSumm.Text = product.Summ(LViewOrder.Items).ToString($"Итого {0:C}", CultureInfo.CreateSpecificCulture("ru-RU"));
-            TboxSumm.Text = product.Summ(LViewOrder.Items).ToString();
+
+
+            //viewModel.Summ = product.Summ(LViewOrder.Items);
+            viewModel.Summa(LViewOrder.Items);
+
+            //TboxSumm.Text = product.Summ(LViewOrder.Items).ToString();
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -68,6 +75,7 @@ namespace FurnitureStore.Pages
                 var order = new Order
                 {
                     DateOrder = DateTime.Now,
+                    TimeOrder = DateTime.Now.TimeOfDay,
                     Cost = Convert.ToDecimal(TboxSumm.Text),
                 };
 
