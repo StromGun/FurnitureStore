@@ -25,7 +25,7 @@
             <DataGrid.Columns>
                 
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*"/>
-                <DataGridTextColumn Header="Дата заказа" Binding="{Binding DateOrder, StringFormat='{}{0:MM/dd/yyyy в hh:mm:ss}'}" Width="*"/>
+                <DataGridTextColumn Header="Дата заказа" Binding="{Binding DateOrder, StringFormat='{}{0:MM/dd/yyyy в HH:mm:ss}'}" Width="*"/>
                 <DataGridTextColumn Header="Сумма" Binding="{Binding Summ, StringFormat=C,ConverterCulture=ru-RU}" Width="*"/>
                 
                 <DataGridTemplateColumn Header="Мебель" Width="*">

@@ -49,7 +49,7 @@ namespace FurnitureStore.Pages
         private void BtnEditOrder_Click(object sender, RoutedEventArgs e)
         {
             var currentOrders = (sender as Button).DataContext as Entities.Order;
-            NavigationService.Navigate(new Pages.AddEditOrderPage(currentOrders));
+            NavigationService.Navigate(new AddEditOrderPage(currentOrders));
         }
     }
 }

@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="720af9d4917640cc98037af0bfa19450" Name="Diagram1" ZoomLevel="77">
+      <Diagram DiagramId="720af9d4917640cc98037af0bfa19450" Name="Diagram1" ZoomLevel="56">
         <EntityTypeShape EntityType="FurnitureStoreModel.Account" Width="1.5" PointX="2.75" PointY="4.75" />
         <EntityTypeShape EntityType="FurnitureStoreModel.Check" Width="1.5" PointX="4.75" PointY="4.75" />
         <EntityTypeShape EntityType="FurnitureStoreModel.Manufacturer" Width="1.5" PointX="0.75" PointY="1.375" />
-        <EntityTypeShape EntityType="FurnitureStoreModel.Order" Width="1.5" PointX="0.75" PointY="4.875" />
+        <EntityTypeShape EntityType="FurnitureStoreModel.Order" Width="1.5" PointX="0.75" PointY="7" />
         <EntityTypeShape EntityType="FurnitureStoreModel.Product" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="FurnitureStoreModel.ProductType" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="FurnitureStoreModel.ProductType" Width="1.5" PointX="0.75" PointY="4.625" />
         <EntityTypeShape EntityType="FurnitureStoreModel.Seller" Width="1.5" PointX="5.75" PointY="0.75" />
         <AssociationConnector Association="FurnitureStoreModel.FK_Products_Manufacturers" />
         <AssociationConnector Association="FurnitureStoreModel.FK_Products_ProductType" />

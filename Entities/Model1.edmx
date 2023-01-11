@@ -42,7 +42,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DateOrder" Type="date" Nullable="false" />
+          <Property Name="DateOrder" Type="datetime" Nullable="false" />
           <Property Name="Cost" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
@@ -211,7 +211,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DateOrder" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateOrder" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="Products" Relationship="FurnitureStoreModel.OrderProduct" FromRole="Order" ToRole="Product" />
         </EntityType>
@@ -280,7 +280,7 @@
           <End Type="FurnitureStoreModel.Order" Role="Order" Multiplicity="*" />
           <End Type="FurnitureStoreModel.Product" Role="Product" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
