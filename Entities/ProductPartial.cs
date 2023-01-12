@@ -1,8 +1,4 @@
-﻿using FurnitureStore.Stuff;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace FurnitureStore.Entities
 {
@@ -21,6 +17,15 @@ namespace FurnitureStore.Entities
         }
 
         
+        public string ManufacturerName
+        {
+            get => Manufacturer.Manufacturer_name;
+        }
+
+        public string ProductTypeName
+        {
+            get => ProductType1.Name;
+        }
         
     }
 }

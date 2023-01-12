@@ -64,6 +64,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ProductPages\AddEditProductPage.xaml.cs">
+      <DependentUpon>AddEditProductPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ProductPages\ProductListPage.xaml.cs">
+      <DependentUpon>ProductListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Stuff\Base\RelayCommand.cs" />
     <Compile Include="Stuff\ObservableObject.cs" />
     <Compile Include="Stuff\AddEditOrderViewModel.cs" />
@@ -123,7 +132,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AddEditOrderPage.xaml">
+    <Page Include="Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\OrderPages\AddEditOrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -131,7 +144,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\OrdersListPage.xaml">
+    <Page Include="Pages\OrderPages\OrdersListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ProductPages\AddEditProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ProductPages\ProductListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,13 +161,13 @@
     <Compile Include="Pages\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddEditOrderPage.xaml.cs">
+    <Compile Include="Pages\OrderPages\AddEditOrderPage.xaml.cs">
       <DependentUpon>AddEditOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AuthorizationPage.xaml.cs">
       <DependentUpon>AuthorizationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\OrdersListPage.xaml.cs">
+    <Compile Include="Pages\OrderPages\OrdersListPage.xaml.cs">
       <DependentUpon>OrdersListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -185,9 +206,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Entities\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -200,6 +219,7 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
     <Content Include="Entities\script.sql" />
+    <Resource Include="Resources\Icons\backspace.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

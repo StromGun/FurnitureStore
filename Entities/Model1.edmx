@@ -55,7 +55,8 @@
           <Property Name="ProductType" Type="int" Nullable="false" />
           <Property Name="Manufacturer_number" Type="int" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
-          <Property Name="Guarantee_period" Type="date" Nullable="false" />
+          <Property Name="GuaranteeMonth" Type="int" Nullable="false" />
+          <Property Name="Image" Type="image" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -226,7 +227,8 @@
           <Property Name="ProductType" Type="Int32" Nullable="false" />
           <Property Name="Manufacturer_number" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Guarantee_period" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="GuaranteeMonth" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Manufacturer" Relationship="FurnitureStoreModel.FK_Products_Manufacturers" FromRole="Product" ToRole="Manufacturer" />
           <NavigationProperty Name="ProductType1" Relationship="FurnitureStoreModel.FK_Products_ProductType" FromRole="Product" ToRole="ProductType" />
           <NavigationProperty Name="Orders" Relationship="FurnitureStoreModel.OrderProduct" FromRole="Product" ToRole="Order" />
@@ -328,7 +330,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="FurnitureStoreModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="Guarantee_period" ColumnName="Guarantee_period" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="GuaranteeMonth" ColumnName="GuaranteeMonth" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Manufacturer_number" ColumnName="Manufacturer_number" />
                 <ScalarProperty Name="ProductType" ColumnName="ProductType" />

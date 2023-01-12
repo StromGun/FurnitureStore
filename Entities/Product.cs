@@ -25,7 +25,8 @@ namespace FurnitureStore.Entities
         public int ProductType { get; set; }
         public int Manufacturer_number { get; set; }
         public decimal Price { get; set; }
-        public System.DateTime Guarantee_period { get; set; }
+        public int GuaranteeMonth { get; set; }
+        public byte[] Image { get; set; }
     
         public virtual Manufacturer Manufacturer { get; set; }
         public virtual ProductType ProductType1 { get; set; }

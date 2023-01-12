@@ -33,7 +33,7 @@ namespace FurnitureStore.Pages
             if (currentUser != null)
             {
                 App.CurrentUser = currentUser;
-                NavigationService.Navigate(new Pages.OrdersListPage());
+                NavigationService.Navigate(new MainPage());
             }
             else
             {
