@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FurnitureStore.Entities;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -71,12 +72,20 @@ namespace FurnitureStore.Pages.ProductPages
 
         private void BtnEditProduct_Click(object sender, RoutedEventArgs e)
         {
-
+            var currentProduct = (sender as Button).DataContext as Product;
+            NavigationService.Navigate(new AddEditProductPage(currentProduct));
         }
 
         private void BtnRemoveProduct_Click(object sender, RoutedEventArgs e)
         {
-
+            var currentProduct = (sender as Button).DataContext as Product;
+            if ( MessageBox.Show($"Вы уверены что хотите удалить продукт: {currentProduct.Name}?","Внимание",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                App.Context.Products.Remove(currentProduct);
+                App.Context.SaveChanges();
+            }
+            UpdateProducts();
         }
 
         private void BtnAddProduct_Click(object sender, RoutedEventArgs e)
